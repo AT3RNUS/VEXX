@@ -6,11 +6,13 @@
 
     <title>V3X</title>
 
-    <link rel="stylesheet" href="style.css">
+    <!-- LOAD STYLESHEET -->
+    <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
 
+    <!-- NAVIGATION -->
     <nav>
         <div class="logo">V3X</div>
 
@@ -23,6 +25,7 @@
     </nav>
 
 
+    <!-- HERO -->
     <section class="hero" id="home">
 
         <div class="warning">
@@ -46,6 +49,7 @@
     </section>
 
 
+    <!-- MEMBERS -->
     <section id="members">
 
         <h2 class="section-title">
@@ -80,6 +84,7 @@
     </section>
 
 
+    <!-- ENEMYS -->
     <section id="enemys">
 
         <h2 class="section-title">
@@ -88,6 +93,7 @@
 
         <div class="enemy-columns">
 
+            <!-- AT3RNUS -->
             <div class="enemy-group">
 
                 <h3>AT3RNUS'S OPPS</h3>
@@ -110,6 +116,7 @@
             </div>
 
 
+            <!-- VEXX -->
             <div class="enemy-group">
 
                 <h3>VEXX'S OPPS</h3>
@@ -136,6 +143,7 @@
     </section>
 
 
+    <!-- JOIN -->
     <section class="join-section" id="join">
 
         <h2 class="section-title">
@@ -154,16 +162,22 @@
     </section>
 
 
+    <!-- FOOTER -->
     <footer>
         V3X — 2026
     </footer>
 
 
+    <!-- JOIN POPUP -->
     <div class="popup-overlay" id="joinPopup">
 
         <div class="popup">
 
-            <button class="close-popup" onclick="closeJoinPopup()">
+            <button
+                class="close-popup"
+                onclick="closeJoinPopup()"
+                aria-label="Close popup"
+            >
                 ×
             </button>
 
@@ -178,7 +192,8 @@
     </div>
 
 
-    <script src="script.js"></script>
+    <!-- LOAD JAVASCRIPT -->
+    <script src="./script.js"></script>
 
 </body>
 </html>
