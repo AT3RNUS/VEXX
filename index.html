@@ -1,200 +1,1033 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>V3X</title>
+<title>V3X</title>
 
-    <!-- LOAD STYLESHEET -->
-    <link rel="stylesheet" href="./style.css">
+<style>
+
+/* =========================
+   RESET
+   ========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #020202;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow-x: hidden;
+}
+
+
+/* =========================
+   BLURRED BACKGROUND
+   ========================= */
+
+.blur-bg {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    background: #020202;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.glow {
+    position: absolute;
+    width: 550px;
+    height: 550px;
+    border-radius: 50%;
+    background: white;
+    filter: blur(150px);
+    opacity: 0.20;
+}
+
+
+/* TOP LEFT */
+
+.glow1 {
+    top: -200px;
+    left: -150px;
+}
+
+
+/* TOP RIGHT */
+
+.glow2 {
+    top: -100px;
+    right: -180px;
+    opacity: 0.16;
+}
+
+
+/* BOTTOM LEFT */
+
+.glow3 {
+    bottom: -200px;
+    left: 10%;
+    opacity: 0.18;
+}
+
+
+/* BOTTOM RIGHT */
+
+.glow4 {
+    bottom: -150px;
+    right: 5%;
+    opacity: 0.14;
+}
+
+
+/* CENTER */
+
+.glow5 {
+    width: 450px;
+    height: 450px;
+    top: 35%;
+    left: 40%;
+    opacity: 0.08;
+}
+
+
+/* DARK OVERLAY */
+
+.blur-bg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.48);
+}
+
+
+/* =========================
+   NAVIGATION
+   ========================= */
+
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 70px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 5%;
+
+    background: rgba(5, 5, 5, 0.65);
+    border-bottom: 1px solid #222;
+
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+
+    z-index: 100;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: bold;
+    letter-spacing: 5px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-links a {
+    color: #aaa;
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.nav-links a:hover {
+    color: white;
+}
+
+
+/* =========================
+   HERO
+   ========================= */
+
+.hero {
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    position: relative;
+
+    padding: 140px 20px 60px;
+
+    background: rgba(0, 0, 0, 0.12);
+}
+
+.warning {
+    position: absolute;
+
+    top: 105px;
+
+    width: 90%;
+    max-width: 900px;
+
+    color: #aaa;
+
+    font-size: 13px;
+    letter-spacing: 3px;
+
+    text-transform: uppercase;
+
+    line-height: 1.6;
+
+    text-shadow:
+        0 0 15px rgba(255,255,255,0.15);
+}
+
+.welcome {
+    font-size: 12px;
+
+    letter-spacing: 7px;
+
+    color: #777;
+
+    margin-top: 65px;
+    margin-bottom: 45px;
+}
+
+.hero h1 {
+    font-size: clamp(90px, 15vw, 220px);
+
+    letter-spacing: 15px;
+
+    font-weight: 900;
+
+    margin-left: 15px;
+
+    text-shadow:
+        0 0 20px rgba(255,255,255,0.15),
+        0 0 60px rgba(255,255,255,0.07);
+
+    animation: titleGlow 4s ease-in-out infinite;
+}
+
+@keyframes titleGlow {
+
+    0%, 100% {
+        text-shadow:
+            0 0 20px rgba(255,255,255,0.15),
+            0 0 60px rgba(255,255,255,0.07);
+    }
+
+    50% {
+        text-shadow:
+            0 0 35px rgba(255,255,255,0.25),
+            0 0 90px rgba(255,255,255,0.10);
+    }
+
+}
+
+.subtitle {
+    margin-top: 30px;
+
+    font-size: 14px;
+
+    letter-spacing: 5px;
+
+    color: #999;
+}
+
+
+/* =========================
+   BUTTON
+   ========================= */
+
+.join-button {
+    margin-top: 45px;
+
+    padding: 17px 42px;
+
+    background: rgba(0,0,0,0.35);
+
+    border: 1px solid #555;
+
+    color: white;
+
+    font-size: 14px;
+
+    letter-spacing: 4px;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        color 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.join-button:hover {
+    transform: scale(1.12);
+
+    background: white;
+
+    color: black;
+
+    border-color: white;
+
+    box-shadow:
+        0 0 30px rgba(255,255,255,0.15);
+}
+
+
+/* =========================
+   SECTIONS
+   ========================= */
+
+section {
+    min-height: 100vh;
+
+    padding: 120px 8%;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+}
+
+.section-title {
+    font-size: 42px;
+
+    letter-spacing: 8px;
+
+    margin-bottom: 70px;
+
+    text-shadow:
+        0 0 25px rgba(255,255,255,0.08);
+}
+
+
+/* =========================
+   MEMBERS
+   ========================= */
+
+.members {
+    width: 100%;
+
+    max-width: 1100px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(250px, 1fr));
+
+    gap: 25px;
+}
+
+.member {
+    padding: 45px 25px;
+
+    border: 1px solid #222;
+
+    background: rgba(5,5,5,0.55);
+
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease,
+        background 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.member:hover {
+    transform: translateY(-8px);
+
+    border-color: #666;
+
+    background: rgba(20,20,20,0.65);
+
+    box-shadow:
+        0 10px 40px rgba(255,255,255,0.04);
+}
+
+.member h3 {
+    font-size: 25px;
+
+    letter-spacing: 3px;
+
+    margin-bottom: 15px;
+}
+
+.member p {
+    color: #888;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================
+   ENEMYS
+   ========================= */
+
+#enemys {
+    background: rgba(0,0,0,0.12);
+}
+
+.enemy-columns {
+    width: 100%;
+
+    max-width: 1100px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(300px, 1fr));
+
+    gap: 60px;
+}
+
+.enemy-group {
+    width: 100%;
+}
+
+.enemy-group > h3 {
+    font-size: 18px;
+
+    letter-spacing: 4px;
+
+    margin-bottom: 25px;
+
+    color: #aaa;
+}
+
+.enemy-card {
+    padding: 25px;
+
+    margin-bottom: 15px;
+
+    background: rgba(5,5,5,0.55);
+
+    border: 1px solid #222;
+
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+
+    text-align: left;
+
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease,
+        background 0.3s ease;
+}
+
+.enemy-card:hover {
+    transform: translateX(8px);
+
+    border-color: #555;
+
+    background: rgba(20,20,20,0.65);
+}
+
+.enemy-card h4 {
+    font-size: 18px;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 8px;
+}
+
+.enemy-card p {
+    color: #777;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================
+   JOIN SECTION
+   ========================= */
+
+.join-section {
+    background: rgba(0,0,0,0.12);
+}
+
+.join-section p {
+    max-width: 550px;
+
+    color: #888;
+
+    line-height: 1.8;
+
+    margin-bottom: 5px;
+}
+
+
+/* =========================
+   POPUP
+   ========================= */
+
+.popup-overlay {
+    position: fixed;
+
+    inset: 0;
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(0,0,0,0.78);
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    z-index: 999;
+}
+
+.popup-overlay.active {
+    display: flex;
+}
+
+.popup {
+    position: relative;
+
+    width: 90%;
+
+    max-width: 450px;
+
+    padding: 50px 35px;
+
+    text-align: center;
+
+    background: rgba(8,8,8,0.92);
+
+    border: 1px solid #444;
+
+    box-shadow:
+        0 0 50px rgba(255,255,255,0.05);
+
+    animation: popupIn 0.25s ease;
+}
+
+.popup h2 {
+    font-size: 28px;
+
+    letter-spacing: 5px;
+
+    margin-bottom: 20px;
+}
+
+.popup p {
+    color: #999;
+
+    font-size: 15px;
+}
+
+.close-popup {
+    position: absolute;
+
+    top: 10px;
+    right: 18px;
+
+    background: none;
+
+    border: none;
+
+    color: #777;
+
+    font-size: 28px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.close-popup:hover {
+    color: white;
+}
+
+@keyframes popupIn {
+
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+}
+
+
+/* =========================
+   FOOTER
+   ========================= */
+
+footer {
+    padding: 30px;
+
+    text-align: center;
+
+    border-top: 1px solid #1c1c1c;
+
+    color: #555;
+
+    font-size: 12px;
+
+    letter-spacing: 2px;
+
+    background: rgba(0,0,0,0.3);
+}
+
+
+/* =========================
+   MOBILE
+   ========================= */
+
+@media (max-width: 700px) {
+
+    .nav-links {
+        gap: 15px;
+    }
+
+    .nav-links a {
+        font-size: 11px;
+    }
+
+    .hero h1 {
+        letter-spacing: 7px;
+    }
+
+    .welcome {
+        letter-spacing: 4px;
+    }
+
+    .warning {
+        font-size: 10px;
+
+        letter-spacing: 2px;
+
+        top: 100px;
+    }
+
+}
+
+</style>
 </head>
+
 
 <body>
 
-    <!-- NAVIGATION -->
-    <nav>
-        <div class="logo">V3X</div>
 
-        <div class="nav-links">
-            <a href="#home">Home</a>
-            <a href="#members">Members</a>
-            <a href="#enemys">Enemys</a>
-            <a href="#join">Join</a>
-        </div>
-    </nav>
+<!-- =========================
+     BLURRED BACKGROUND
+     ========================= -->
 
+<div class="blur-bg">
 
-    <!-- HERO -->
-    <section class="hero" id="home">
+    <div class="glow glow1"></div>
 
-        <div class="warning">
-            To all my haters, just know your fucking with the wrong guy
-        </div>
+    <div class="glow glow2"></div>
 
-        <div class="welcome">
-            WELCOME TO
-        </div>
+    <div class="glow glow3"></div>
 
-        <h1>V3X</h1>
+    <div class="glow glow4"></div>
 
-        <div class="subtitle">
-            ENTER THE UNKNOWN.
-        </div>
+    <div class="glow glow5"></div>
 
-        <button class="join-button" onclick="openJoinPopup()">
-            HOW TO JOIN
-        </button>
-
-    </section>
+</div>
 
 
-    <!-- MEMBERS -->
-    <section id="members">
+<!-- =========================
+     NAV
+     ========================= -->
 
-        <h2 class="section-title">
-            MEMBERS
-        </h2>
+<nav>
 
-        <div class="members">
+    <div class="logo">
+        V3X
+    </div>
 
-            <div class="member">
-                <h3>VEXX</h3>
-                <p>Creator</p>
-            </div>
+    <div class="nav-links">
 
-            <div class="member">
-                <h3>AT3RNUS</h3>
-                <p>
-                    Member & creator of
-                    <br>
-                    ⸸𝔇ℜ34𝔇⸸
-                </p>
-            </div>
+        <a href="#home">
+            Home
+        </a>
 
-            <div class="member">
-                <h3>FAZELOGAN</h3>
-                <p>
-                    Friend & member of FaZe
-                </p>
-            </div>
+        <a href="#members">
+            Members
+        </a>
 
-        </div>
+        <a href="#enemys">
+            Enemys
+        </a>
 
-    </section>
+        <a href="#join">
+            Join
+        </a>
+
+    </div>
+
+</nav>
 
 
-    <!-- ENEMYS -->
-    <section id="enemys">
+<!-- =========================
+     HOME
+     ========================= -->
 
-        <h2 class="section-title">
-            ENEMYS
-        </h2>
+<section class="hero" id="home">
 
-        <div class="enemy-columns">
+    <div class="warning">
+        To all my haters, just know your fucking with the wrong guy
+    </div>
 
-            <!-- AT3RNUS -->
-            <div class="enemy-group">
+    <div class="welcome">
+        WELCOME TO
+    </div>
 
-                <h3>AT3RNUS'S OPPS</h3>
+    <h1>
+        V3X
+    </h1>
 
-                <div class="enemy-card">
-                    <h4>Kyle Moser</h4>
-                    <p>Rival of AT3RNUS.</p>
-                </div>
+    <div class="subtitle">
+        ENTER THE UNKNOWN.
+    </div>
 
-                <div class="enemy-card">
-                    <h4>Appel</h4>
-                    <p>Ongoing rival of AT3RNUS.</p>
-                </div>
+    <button
+        class="join-button"
+        onclick="openJoinPopup()"
+    >
+        HOW TO JOIN
+    </button>
 
-                <div class="enemy-card">
-                    <h4>Brayden</h4>
-                    <p>Rival of AT3RNUS.</p>
-                </div>
-
-            </div>
-
-
-            <!-- VEXX -->
-            <div class="enemy-group">
-
-                <h3>VEXX'S OPPS</h3>
-
-                <div class="enemy-card">
-                    <h4>Kyle Moser</h4>
-                    <p>Rival of Vexx.</p>
-                </div>
-
-                <div class="enemy-card">
-                    <h4>Appel</h4>
-                    <p>Ongoing rival of Vexx.</p>
-                </div>
-
-                <div class="enemy-card">
-                    <h4>Brayden</h4>
-                    <p>Rival of Vexx.</p>
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
+</section>
 
 
-    <!-- JOIN -->
-    <section class="join-section" id="join">
+<!-- =========================
+     MEMBERS
+     ========================= -->
 
-        <h2 class="section-title">
-            JOIN V3X
-        </h2>
+<section id="members">
 
-        <p>
-            Want to become part of V3X?
-            Contact the owner to join the clan.
-        </p>
+    <h2 class="section-title">
+        MEMBERS
+    </h2>
 
-        <button class="join-button" onclick="openJoinPopup()">
-            HOW TO JOIN
-        </button>
+    <div class="members">
 
-    </section>
+        <div class="member">
 
-
-    <!-- FOOTER -->
-    <footer>
-        V3X — 2026
-    </footer>
-
-
-    <!-- JOIN POPUP -->
-    <div class="popup-overlay" id="joinPopup">
-
-        <div class="popup">
-
-            <button
-                class="close-popup"
-                onclick="closeJoinPopup()"
-                aria-label="Close popup"
-            >
-                ×
-            </button>
-
-            <h2>HOW TO JOIN</h2>
+            <h3>
+                VEXX
+            </h3>
 
             <p>
-                Contact The owner to join
+                Creator
+            </p>
+
+        </div>
+
+
+        <div class="member">
+
+            <h3>
+                AT3RNUS
+            </h3>
+
+            <p>
+                Member & creator of
+                <br>
+                ⸸𝔇ℜ34𝔇⸸
+            </p>
+
+        </div>
+
+
+        <div class="member">
+
+            <h3>
+                FAZELOGAN
+            </h3>
+
+            <p>
+                Friend & member of FaZe
             </p>
 
         </div>
 
     </div>
 
+</section>
 
-    <!-- LOAD JAVASCRIPT -->
-    <script src="./script.js"></script>
+
+<!-- =========================
+     ENEMYS
+     ========================= -->
+
+<section id="enemys">
+
+    <h2 class="section-title">
+        ENEMYS
+    </h2>
+
+    <div class="enemy-columns">
+
+
+        <!-- AT3RNUS -->
+
+        <div class="enemy-group">
+
+            <h3>
+                AT3RNUS'S OPPS
+            </h3>
+
+
+            <div class="enemy-card">
+
+                <h4>
+                    Kyle Moser
+                </h4>
+
+                <p>
+                    Rival of AT3RNUS.
+                </p>
+
+            </div>
+
+
+            <div class="enemy-card">
+
+                <h4>
+                    Appel
+                </h4>
+
+                <p>
+                    Ongoing rival of AT3RNUS.
+                </p>
+
+            </div>
+
+
+            <div class="enemy-card">
+
+                <h4>
+                    Brayden
+                </h4>
+
+                <p>
+                    Rival of AT3RNUS.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- VEXX -->
+
+        <div class="enemy-group">
+
+            <h3>
+                VEXX'S OPPS
+            </h3>
+
+
+            <div class="enemy-card">
+
+                <h4>
+                    Kyle Moser
+                </h4>
+
+                <p>
+                    Rival of Vexx.
+                </p>
+
+            </div>
+
+
+            <div class="enemy-card">
+
+                <h4>
+                    Appel
+                </h4>
+
+                <p>
+                    Ongoing rival of Vexx.
+                </p>
+
+            </div>
+
+
+            <div class="enemy-card">
+
+                <h4>
+                    Brayden
+                </h4>
+
+                <p>
+                    Rival of Vexx.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     JOIN
+     ========================= -->
+
+<section class="join-section" id="join">
+
+    <h2 class="section-title">
+        JOIN V3X
+    </h2>
+
+    <p>
+        Want to become part of V3X?
+        Contact the owner to join the clan.
+    </p>
+
+    <button
+        class="join-button"
+        onclick="openJoinPopup()"
+    >
+        HOW TO JOIN
+    </button>
+
+</section>
+
+
+<!-- =========================
+     FOOTER
+     ========================= -->
+
+<footer>
+    V3X — 2026
+</footer>
+
+
+<!-- =========================
+     JOIN POPUP
+     ========================= -->
+
+<div
+    class="popup-overlay"
+    id="joinPopup"
+>
+
+    <div class="popup">
+
+        <button
+            class="close-popup"
+            onclick="closeJoinPopup()"
+            aria-label="Close popup"
+        >
+            ×
+        </button>
+
+        <h2>
+            HOW TO JOIN
+        </h2>
+
+        <p>
+            Contact The owner to join
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     JAVASCRIPT
+     ========================= -->
+
+<script>
+
+function openJoinPopup() {
+
+    document
+        .getElementById("joinPopup")
+        .classList
+        .add("active");
+
+}
+
+
+function closeJoinPopup() {
+
+    document
+        .getElementById("joinPopup")
+        .classList
+        .remove("active");
+
+}
+
+
+/* Close when clicking outside popup */
+
+document
+    .getElementById("joinPopup")
+    .addEventListener("click", function(event) {
+
+        if (event.target === this) {
+
+            closeJoinPopup();
+
+        }
+
+    });
+
+
+/* Close with ESC */
+
+document.addEventListener("keydown", function(event) {
+
+    if (event.key === "Escape") {
+
+        closeJoinPopup();
+
+    }
+
+});
+
+</script>
+
 
 </body>
 </html>
-
